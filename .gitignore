@@ -8,5 +8,7 @@
 *.jar
 *.war
 *.ear
+*.iml
 out/*
 .idea/*
+target
