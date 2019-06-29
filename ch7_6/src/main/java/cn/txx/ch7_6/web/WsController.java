@@ -8,6 +8,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
+
 /* *
  * 描述:
  * @user tianxinxing
@@ -25,7 +27,7 @@ public class WsController {
         return new WiselyResponse("Welcome, "+ message.getName() + "!");
     }
 
-    /*@MessageMapping("/chat")
+    @MessageMapping("/chat")
     public void handleChat(Principal principal, String msg) { //2
         if (principal.getName().equals("wyf")) {//3
             messagingTemplate.convertAndSendToUser("wisely",
@@ -36,5 +38,5 @@ public class WsController {
                     "/queue/notifications", principal.getName() + "-send:"
                             + msg);
         }
-    }*/
+    }
 }
