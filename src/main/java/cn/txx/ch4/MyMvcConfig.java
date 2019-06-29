@@ -2,16 +2,24 @@ package cn.txx.ch4;
 
 import cn.txx.ch4.interceptor.DemoInterceptor;
 import cn.txx.ch4.messageconverter.MyMessageConverter;
+import com.sun.tracing.ProbeName;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.List;
 
@@ -26,7 +34,10 @@ import java.util.List;
 @ComponentScan("cn.txx.ch4")
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
-    /*视图解析器*/
+    /**
+     * jsp 视图解析器
+     * @return
+     */
     @Bean
     public InternalResourceViewResolver viewResolver(){
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -35,6 +46,36 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         viewResolver.setViewClass(JstlView.class);
         return viewResolver;
     }
+
+    @Bean // 配置生成模板解析器
+    public ITemplateResolver templateResolver() {
+        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+        // ServletContextTemplateResolver需要一个ServletContext作为构造参数，可通过WebApplicationContext 的方法获得
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(
+                webApplicationContext.getServletContext());
+        templateResolver.setPrefix("/WEB-INF/thymeleaf/");
+        templateResolver.setSuffix(".html");
+        // templateResolver.setCharacterEncoding("UTF-8");
+        // 设置模板模式,也可用字符串"HTML"代替,此处不建议使用HTML5,原因看下图源码
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        return templateResolver;
+    }
+
+    @Bean
+    public SpringTemplateEngine templateEngine(){
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+        return templateEngine;
+    }
+
+    @Bean
+    public ThymeleafViewResolver thymeleafViewResolver(){
+        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+        //thymeleafViewResolver.setContentType("text/html; charset=utf-8");
+        thymeleafViewResolver.setTemplateEngine(templateEngine());
+        return thymeleafViewResolver;
+    }
+
 
     /**
      * 拦截
