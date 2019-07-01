@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 
-@RepositoryRestResource(path = "people")
+@RepositoryRestResource(path = "people") //定制根路径为people 默认为实体类小写后加s
 public interface PersonRepository extends JpaRepository<Person, Long> {
 	
 	@RestResource(path = "nameStartsWith", rel = "nameStartsWith")
