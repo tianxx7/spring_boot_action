@@ -76,6 +76,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
     public MapperScannerConfigurer mapperScannerConfigurer(){
         MapperScannerConfigurer configurer = new MapperScannerConfigurer();
         configurer.setBasePackage("cn.txx.ch4.dao");
+        //下面这一行不影响
         //configurer.setSqlSessionFactoryBeanName("SqlSessionFactory");
         return configurer;
     }
