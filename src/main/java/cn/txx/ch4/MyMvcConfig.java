@@ -2,10 +2,15 @@ package cn.txx.ch4;
 
 import cn.txx.ch4.interceptor.DemoInterceptor;
 import cn.txx.ch4.messageconverter.MyMessageConverter;
+import com.alibaba.druid.pool.DruidDataSource;
 import com.sun.tracing.ProbeName;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.context.ContextLoader;
@@ -21,6 +26,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.List;
 
 /* *
@@ -33,6 +40,45 @@ import java.util.List;
 @EnableScheduling
 @ComponentScan("cn.txx.ch4")
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
+
+
+    /*配置数据库连接池*/
+    @Bean
+    public DataSource dataSource(){
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/test");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        return dataSource;
+    }
+
+    /*配置sqlSessionFactory*/
+    @Bean
+    public SqlSessionFactoryBean SqlSessionFactory(DataSource dataSource) throws IOException {
+        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(dataSource);
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        //获取mapper.xml文件
+       /* Resource[] resources = resolver.getResources("classpath:mappers/*.xml");
+        sqlSessionFactory.setMapperLocations(resources);*/
+        //配置MyBatis的配置文件
+        Resource resource = resolver.getResource("classpath:mybatis-config.xml");
+        sqlSessionFactory.setConfigLocation(resource);
+
+        //bean的alias
+//        sqlSessionFactory.setTypeAliasesPackage("");
+        return sqlSessionFactory;
+    }
+
+    /*mybatis 包扫描*/
+    @Bean
+    public MapperScannerConfigurer mapperScannerConfigurer(){
+        MapperScannerConfigurer configurer = new MapperScannerConfigurer();
+        configurer.setBasePackage("cn.txx.ch4.dao");
+        //configurer.setSqlSessionFactoryBeanName("SqlSessionFactory");
+        return configurer;
+    }
 
     /**
      * jsp 视图解析器
@@ -47,7 +93,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
-    @Bean // 配置生成模板解析器
+    /*@Bean // 配置生成模板解析器
     public ITemplateResolver templateResolver() {
         WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
         // ServletContextTemplateResolver需要一个ServletContext作为构造参数，可通过WebApplicationContext 的方法获得
@@ -74,7 +120,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         //thymeleafViewResolver.setContentType("text/html; charset=utf-8");
         thymeleafViewResolver.setTemplateEngine(templateEngine());
         return thymeleafViewResolver;
-    }
+    }*/
 
 
     /**

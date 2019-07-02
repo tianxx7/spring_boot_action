@@ -32,7 +32,7 @@ public class DemoServiceImpl implements DemoService {
 	public void remove(Long id) {
 		System.out.println("删除了id、key为"+id+"的数据缓存");
 		//这里不做实际删除操作
-		personRepository.deleteById(id);
+		//personRepository.deleteById(id);
 	}
 
 	@Override

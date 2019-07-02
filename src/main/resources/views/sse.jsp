@@ -15,7 +15,7 @@
 <div id="msgFromPush"></div>
 </body>
 </html>
-<script src="assets/jquery-3.2.1.min.js"></script>
+<script src="static/jquery-1.10.2.min.js"></script>
 <script>
     if(!!window.EventSource){
         var source = new EventSource("push");

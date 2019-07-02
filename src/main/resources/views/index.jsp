@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="assets/jquery-3.2.1.min.js"></script>
+    <script src="static/jquery-1.10.2.min.js"></script>
 </head>
 <body>
 <h2>hellow world</h2>

@@ -14,7 +14,7 @@
 servlet 3.0+对异步的支持
 </body>
 </html>
-<script src="assets/jquery-3.2.1.min.js"></script>
+<script src="static/jquery-1.10.2.min.js"></script>
 <script>
     deferred();
     function deferred(){
