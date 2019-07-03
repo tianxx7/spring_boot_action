@@ -13,7 +13,7 @@
     <script src="static/jquery-1.10.2.min.js"></script>
 </head>
 <body>
-<h2>hellow world</h2>
+<h2>首页</h2>
 <div id="resp"></div>
 <input type="button" onclick="req()" value="请求">
 </body>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2019/6/24
  */
 @Controller
+@RequestMapping("/hello")
 public class HelloController {
 
     @RequestMapping("/index")
