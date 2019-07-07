@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 @RequestMapping
 public class IndexController {
-    @RequestMapping("/")
+    @RequestMapping("/list")
     public String index(Model model) {
         Person single = new Person("aa", 11);
 
@@ -31,6 +31,6 @@ public class IndexController {
         model.addAttribute("singlePerson", single);
         model.addAttribute("people", people);
 
-        return "home";
+        return "list";
     }
 }

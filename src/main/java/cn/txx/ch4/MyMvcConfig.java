@@ -159,6 +159,8 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         //这里添加会覆盖上面的@RequestMapping
+        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/home").setViewName("home");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/toUpload").setViewName("/upload");
         registry.addViewController("/sse").setViewName("/sse");
