@@ -13,11 +13,23 @@
     <security:http>
         <!--pattern 需要拦截的资源
           access:拦截方式
-            isFullAuthenticated(),该资源需要认证
+            isFullAuthenticated(),该资源需要认证才能访问
+            permitAll():允许所有访问
         -->
+        <security:intercept-url pattern="/usersLogin" access="permitAll()"/>
+        <security:intercept-url pattern="/product/index" access="permitAll()"/>
         <security:intercept-url pattern="/**" access="isFullyAuthenticated()"></security:intercept-url>
         <!--使用httpbasic 方式认证-->
-        <security:http-basic />
+        <!--<security:http-basic />-->
+        <!--表单登陆方式
+        login-page:自定义登陆页面
+        可能会由403错: Could not verify the provided CSRF token because your session was not found.
+        login-processing-url:登陆请求地址
+
+        -->
+        <security:form-login login-page="/usersLogin" login-processing-url="/securityLogin" />
+        <!--g关闭 csrf-->
+        <security:csrf disabled="true"/>
     </security:http>
 
     <!--
