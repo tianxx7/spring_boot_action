@@ -4,6 +4,11 @@
        xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+
+    <bean id="myUserDetailsService" class="security.MyUserDetailService"></bean>
+
+    <bean id="myAuthenticationSuccessHandler" class="security.MyAuthenticationSuccessHandler"></bean>
+    <bean id="myAuthenticationFailureHandler" class="security.MyAuthenticationFailureHandler"></bean>
     <!--
     1)需要拦截什么资源
     2)什么资源需要什么角色
@@ -18,6 +23,10 @@
         -->
         <security:intercept-url pattern="/usersLogin" access="permitAll()"/>
         <security:intercept-url pattern="/product/index" access="permitAll()"/>
+        <security:intercept-url pattern="/product/add" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/product/update" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/product/list" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/product/del" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/**" access="isFullyAuthenticated()"></security:intercept-url>
         <!--使用httpbasic 方式认证-->
         <!--<security:http-basic />-->
@@ -25,9 +34,16 @@
         login-page:自定义登陆页面
         可能会由403错: Could not verify the provided CSRF token because your session was not found.
         login-processing-url:登陆请求地址
-
+authentication-success-handler-ref:自定义登陆处理逻辑
         -->
-        <security:form-login login-page="/usersLogin" login-processing-url="/securityLogin" />
+        <security:form-login login-page="/usersLogin" login-processing-url="/securityLogin"
+                            default-target-url="/product/index"
+            authentication-success-handler-ref="myAuthenticationSuccessHandler"
+        authentication-failure-handler-ref="myAuthenticationFailureHandler"/>
+
+        <!--自定义权限不足处理-->
+        <security:access-denied-handler error-page="/error"/>
+
         <!--g关闭 csrf-->
         <security:csrf disabled="true"/>
     </security:http>
@@ -36,10 +52,10 @@
     认证管理信息,账户名,密码,角色
     -->
     <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="txx" password="123456" authorities="ROLE_USER" />
-            </security:user-service>
+        <!--自定义userDetailService方式-->
+        <security:authentication-provider user-service-ref="myUserDetailsService">
         </security:authentication-provider>
     </security:authentication-manager>
+
+
 </beans>

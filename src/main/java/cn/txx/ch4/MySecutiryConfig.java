@@ -23,13 +23,15 @@ public class MySecutiryConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .anyRequest().authenticated()
         .and().formLogin()
-                .loginPage("/login")
+                .loginPage("/userLogin")
+                .defaultSuccessUrl("/list")
                 .failureUrl("/login?error")
                 .permitAll()
                 .and()
                 .rememberMe()
                 .tokenValiditySeconds(1209600)
                 .and().logout().permitAll(); //cookie有效期 2周
+        http.csrf().disable();
     }
 
     //4
@@ -37,9 +39,7 @@ public class MySecutiryConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication().passwordEncoder(new MyPasswordEncoder())
-                .withUser("wyf").password("wyf").roles("USER")
-                .and()
-                .withUser("wisely").password("wisely").roles("USER");
+                .withUser("txx").password("123").roles("USER");
     }
 
     //5忽略静态资源的拦截

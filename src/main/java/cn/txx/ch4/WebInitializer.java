@@ -2,8 +2,10 @@ package cn.txx.ch4;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -24,5 +26,9 @@ public class WebInitializer implements WebApplicationInitializer {
         servlet.addMapping("/");
         servlet.setAsyncSupported(true);
         servlet.setLoadOnStartup(1);
+
+        DelegatingFilterProxy filterProxy = new DelegatingFilterProxy();
+        FilterRegistration.Dynamic filter = servletContext.addFilter("springSecurityFilterChain", filterProxy);
+        filter.addMappingForUrlPatterns(null,false,"/*");
     }
 }
