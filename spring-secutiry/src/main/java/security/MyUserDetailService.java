@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class MyUserDetailService implements UserDetailsService {
     /**
      * 读取数据库用户信息
+     * 输入用户名后总能返回一个用户信息,所以只要密码对,就能登陆
      * @param userName
      * @return
      * @throws UsernameNotFoundException
