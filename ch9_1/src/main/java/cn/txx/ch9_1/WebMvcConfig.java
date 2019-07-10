@@ -20,8 +20,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addViewController("/login").setViewName("login");
     }
 
-    /*@Override
+    @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-    }*/
+    }
 }
