@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cn.txx</groupId>
-	<artifactId>ch9_3_activemq</artifactId>
+	<artifactId>ch9_3_rabbitmq</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ch9_3_activemq</name>
+	<name>ch9_3_rabbitmq</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -21,27 +21,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jms</artifactId>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/javax.jms/javax.jms-api -->
-        <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>javax.jms-api</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-client</artifactId>
-
-        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
