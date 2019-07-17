@@ -20,6 +20,7 @@ public class WsController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;//1
 
+    //广播
     @MessageMapping("/welcome")
     @SendTo("/topic/getResponse")
     public WiselyResponse say(WiselyMessage message) throws InterruptedException {
