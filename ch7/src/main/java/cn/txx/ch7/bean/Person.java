@@ -1,5 +1,7 @@
 package cn.txx.ch7.bean;
 
+import org.springframework.context.annotation.Import;
+
 /* *
  * 描述:
  * @user tianxinxing
