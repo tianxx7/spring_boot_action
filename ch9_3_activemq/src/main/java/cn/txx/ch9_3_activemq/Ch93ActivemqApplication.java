@@ -18,7 +18,8 @@ public class Ch93ActivemqApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 		System.out.println(System.currentTimeMillis());
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
         jmsTemplate.send("my-destination", new Msg()); //3
+        jmsTemplate.convertAndSend("my-destination","txx");
     }
 }
