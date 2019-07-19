@@ -27,6 +27,7 @@ public class WebInitializer implements WebApplicationInitializer {
         servlet.setAsyncSupported(true);
         servlet.setLoadOnStartup(1);
 
+        /*spring security拦截器代理*/
         DelegatingFilterProxy filterProxy = new DelegatingFilterProxy();
         FilterRegistration.Dynamic filter = servletContext.addFilter("springSecurityFilterChain", filterProxy);
         filter.addMappingForUrlPatterns(null,false,"/*");

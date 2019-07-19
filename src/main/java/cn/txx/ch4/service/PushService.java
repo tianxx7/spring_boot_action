@@ -24,5 +24,4 @@ public class PushService {
             deferredResult.setResult(new Long(System.currentTimeMillis()).toString());
         }
     }
-
 }

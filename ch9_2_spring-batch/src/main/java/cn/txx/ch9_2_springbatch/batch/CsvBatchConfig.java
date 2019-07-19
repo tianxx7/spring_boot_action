@@ -36,7 +36,7 @@ public class CsvBatchConfig {
 	public ItemReader<Person> reader() throws Exception {
 		FlatFileItemReader<Person> reader = new FlatFileItemReader<Person>(); //1
 		reader.setResource(new ClassPathResource("people.csv")); //2
-	        reader.setLineMapper(new DefaultLineMapper<Person>() {{ //3
+	        reader.setLineMapper(new DefaultLineMapper<Person>() {{ //3 此处对csv文件的数据和领域模型类做对应的映射
 	            setLineTokenizer(new DelimitedLineTokenizer() {{
 	                setNames(new String[] { "name","age", "nation" ,"address"});
 	            }});

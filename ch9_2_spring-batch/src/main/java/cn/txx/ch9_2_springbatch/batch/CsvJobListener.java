@@ -3,6 +3,9 @@ package cn.txx.ch9_2_springbatch.batch;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 
+/*
+* Job监听
+* */
 public class CsvJobListener implements JobExecutionListener{ 
 
     long startTime;

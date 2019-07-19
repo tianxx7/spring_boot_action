@@ -9,18 +9,20 @@ import javax.validation.ValidatorFactory;
 import org.springframework.batch.item.validator.ValidationException;
 import org.springframework.batch.item.validator.Validator;
 import org.springframework.beans.factory.InitializingBean;
-
+/*
+* 校验
+* */
 public class CsvBeanValidator<T> implements Validator<T>,InitializingBean {
     private javax.validation.Validator validator; 
     @Override
-    public void afterPropertiesSet() throws Exception { //1
+    public void afterPropertiesSet() throws Exception { //1  Validator初始化
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.usingContext().getValidator();
     }
 
     @Override
     public void validate(T value) throws ValidationException {
-        Set<ConstraintViolation<T>> constraintViolations = validator.validate(value); //2
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(value); //2 校验数据
         if(constraintViolations.size()>0){
             
             StringBuilder message = new StringBuilder();

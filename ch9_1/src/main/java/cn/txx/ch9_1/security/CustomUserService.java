@@ -19,8 +19,6 @@ public class CustomUserService implements UserDetailsService { //1
 		if(user == null){
 			throw new UsernameNotFoundException("用户名不存在");
 		}
-		
 		return user; //3
 	}
-
 }
